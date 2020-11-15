@@ -7,7 +7,7 @@ best <- function(state, outcome){
   if (!state %in% unique(data$State)) stop("invalid state")
   if (!outcome %in% c("heart attack","heart failure", "pneumonia")) stop("invalid outcome")
   
-  #Select variables of interest'
+  #Select & extract variables to be filtered
   outcomes <- c("heart attack" = 11, "heart failure" = 17, "pneumonia" = 23)
   
   data <- data[data$State == state, c(2,7,outcomes[[outcome]])]
