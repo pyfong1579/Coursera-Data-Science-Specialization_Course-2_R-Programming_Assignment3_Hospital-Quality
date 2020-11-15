@@ -18,22 +18,18 @@ rankhospital <- function(state, outcome, num= "best"){
   # remove NA
   data <- data[complete.cases(data),]
   
-  #re order by outcome 
-  state_rank <- order(data$outcome, data$hospital)
-  data <- data[state_rank,]
+  #re order by outcome and hospital to handle ties
+  ranking <- order(data$outcome, data$hospital)
+  data <- data[ranking,]
   
   data$hospital
   
-  if(num == "best"){
-    return(data$hospital[1])
-  } else if(num == "worst"){
-    return(data$hospital[length(data$hospital)])
-  } else if(num > length(data$hospital) | num < 0){
-    return(NA)
-  } else {
-    
+  #selection loops
+  if(num == "best") return(data$hospital[1])
+  if(num == "worst") return(data$hospital[nrow(data)])
+  if(is.null(num)| num > nrow(data)| num <= 0) return(NA)
+    else {
     ##Return hospital name in that state with the given rank 30-day death rate
-      return(data$hospital[num])
+    return(data$hospital[num])
   }
-  
 }
